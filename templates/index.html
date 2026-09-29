@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <meta name="theme-color" content="#020402">
+    <title>Overseer Network - Vault-Tec Control</title>
+
+    <link rel="manifest" href="/static/manifest.webmanifest">
+    <link rel="stylesheet" href="/static/css/style.css?v=13">
+    <link rel="stylesheet" href="/static/css/workspace.css?v=14">
+    <link rel="stylesheet" href="/static/css/fallout.css?v=16">
+    <link rel="stylesheet" href="/static/css/setup.css?v=2">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@0.9.0/lib/xterm-addon-web-links.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Ubuntu+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+</head>
+
+<body class="crt ops-dashboard">
+    <div class="scanlines"></div>
+    <div id="globe-container"></div>
+    <div id="map-label-layer"></div>
+
+    <header id="ui-header">
+        <div class="brand-mark" aria-hidden="true"><span class="map-icon icon-globe"></span></div>
+        <div class="brand-copy">
+        <h1 data-i18n="appTitle">Сеть Смотрителя</h1>
+        <p data-i18n="appSubtitle">Ситуационный центр личной инфраструктуры</p>
+        </div>
+        <div class="header-signature">ROBCO INDUSTRIES<span>OVERSEER / 2077</span></div>
+    </header>
+
+    <div id="map-topbar">
+        <div class="map-heading"><span data-i18n="mapSector">ГЛОБАЛЬНЫЙ СЕКТОР</span><strong id="map-inventory"></strong></div>
+        <div class="map-surfaces" role="group" aria-label="Слой карты" data-i18n-aria="mapSurface">
+            <button type="button" data-map-surface="relief" aria-pressed="true" data-i18n="mapRelief">Рельеф</button>
+            <button type="button" data-map-surface="tactical" aria-pressed="false" data-i18n="mapTactical">Тактика</button>
+        </div>
+    </div>
+
+    <div id="map-tools" role="toolbar" aria-label="Карта" data-i18n-aria="mapIntel">
+        <button type="button" class="map-tool" data-map-action="zoom-in" data-i18n-aria="mapZoomIn" data-i18n-title="mapZoomIn"><span class="map-icon icon-zoom-in" aria-hidden="true"></span></button>
+        <button type="button" class="map-tool" data-map-action="zoom-out" data-i18n-aria="mapZoomOut" data-i18n-title="mapZoomOut"><span class="map-icon icon-zoom-out" aria-hidden="true"></span></button>
+        <button type="button" class="map-tool" data-map-action="fit" data-i18n-aria="mapFit" data-i18n-title="mapFit"><span class="map-icon icon-focus" aria-hidden="true"></span></button>
+        <span class="tool-separator"></span>
+        <button type="button" class="map-tool" data-map-action="rotate" aria-pressed="false" data-i18n-aria="mapRotate" data-i18n-title="mapRotate"><span class="map-icon icon-rotate" aria-hidden="true"></span></button>
+        <button type="button" class="map-tool" data-map-action="grid" aria-pressed="true" data-i18n-aria="mapGrid" data-i18n-title="mapGrid"><span class="map-icon icon-grid" aria-hidden="true"></span></button>
+        <button type="button" class="map-tool" data-map-action="labels" aria-pressed="true" data-i18n-aria="mapLabels" data-i18n-title="mapLabels"><span class="map-icon icon-pin" aria-hidden="true"></span></button>
+        <button type="button" class="map-tool" data-map-action="links" aria-pressed="true" data-i18n-aria="mapLinks" data-i18n-title="mapLinks"><span class="map-icon icon-route" aria-hidden="true"></span></button>
+        <button type="button" class="map-tool" data-map-action="expand" aria-pressed="false" data-i18n-aria="mapExpand" data-i18n-title="mapExpand"><span class="map-icon icon-expand" aria-hidden="true"></span></button>
+    </div>
+
+    <div id="map-alert" role="status" hidden></div>
+    <section id="map-site-popover" aria-labelledby="site-title" hidden>
+        <header><strong id="site-title"></strong><button type="button" class="map-tool" id="close-site" data-i18n-aria="mapClose" data-i18n-title="mapClose"><span class="map-icon icon-close" aria-hidden="true"></span></button></header>
+        <div id="site-nodes"></div>
+        <footer id="site-coordinates"></footer>
+    </section>
+
+    <section id="map-intel">
+        <div class="intel-kicker" data-i18n="mapIntel">Карта</div>
+        <strong id="intel-title">Узел не выбран</strong>
+        <span id="intel-body">Выберите точку на карте или сервер в списке.</span>
+    </section>
+
+    <footer id="map-footer">
+        <div class="map-legend"><span><i class="legend-dot healthy"></i><span data-i18n="health_healthy">В норме</span></span><span><i class="legend-dot degraded"></i><span data-i18n="health_degraded">Внимание</span></span><span><i class="legend-dot offline"></i><span data-i18n="offline">Офлайн</span></span><span><i class="legend-dot unknown"></i><span data-i18n="health_unknown">Не проверено</span></span><span><i class="legend-route"></i><span data-i18n="mapConfiguredLinks">Связи из реестра</span></span></div>
+        <output id="map-view-coordinates"></output>
+    </footer>
+
+    <aside id="command-deck">
+        <div class="deck-title">
+            <span data-i18n="commandTitle">ПАНЕЛЬ СМОТРИТЕЛЯ</span>
+            <strong id="network-state">Синхронизация</strong>
+        </div>
+
+        <div class="deck-tabs">
+            <button class="deck-tab active" data-deck-tab="overview" data-i18n="overview">Обзор</button>
+            <button class="deck-tab" data-deck-tab="nodes" data-i18n="nodes">Узлы</button>
+            <button class="deck-tab" data-deck-tab="services" data-i18n="services">Сервисы</button>
+            <button class="deck-tab" data-deck-tab="editor" data-i18n="editor">Сервер</button>
+            <button class="deck-tab" data-deck-tab="settings" data-i18n="settings">Настройки</button>
+        </div>
+
+        <section class="deck-panel active" data-deck-panel="overview">
+            <section id="first-run" hidden>
+                <h2 data-i18n="firstNode">Первый узел</h2>
+                <div class="setup-actions">
+                    <button type="button" data-create-node="local" data-i18n="addLocalPc">Добавить этот ПК</button>
+                    <button type="button" data-create-node="ssh" data-i18n="addSshServer">Добавить SSH-сервер</button>
+                </div>
+            </section>
+            <div id="overview-summary" class="summary-grid"></div>
+            <div id="fleet-overview" aria-live="polite"></div>
+            <div id="selected-node-panel" class="selected-node-panel"></div>
+            <div id="local-metrics" class="metrics-grid"></div>
+        </section>
+
+        <section class="deck-panel" data-deck-panel="nodes">
+            <div class="panel-toolbar">
+                <button type="button" id="new-node-btn" data-i18n="newNode">Новый</button>
+                <button type="button" id="refresh-status-btn" data-i18n="refreshStatus">Обновить статус</button>
+            </div>
+            <div id="node-list-feedback" role="status"></div>
+            <div id="node-list"></div>
+        </section>
+
+        <section class="deck-panel" data-deck-panel="services">
+            <div class="service-toolbar">
+                <select id="service-node" aria-label="Сервер"></select>
+                <button id="inspect-node-btn" type="button" data-i18n="checkNow">Проверить</button>
+            </div>
+            <p id="service-feedback" role="status"></p>
+            <div id="service-detail"></div>
+            <div class="form-section-title" data-i18n="networkDiagnostics">Сетевая диагностика</div>
+            <div class="service-toolbar">
+                <select id="diagnostic-group" aria-label="Назначение">
+                    <option value="openai">OpenAI / ChatGPT</option>
+                    <option value="google">Google / Gemini</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="russian" data-i18n="russianSites">Российские сайты</option>
+                </select>
+                <button id="diagnose-btn" type="button" data-i18n="checkNow">Проверить</button>
+            </div>
+            <div id="diagnostic-results" aria-live="polite"></div>
+            <div class="form-section-title" data-i18n="operationHistory">Журнал операций</div>
+            <div id="operation-history"></div>
+        </section>
+
+        <section class="deck-panel" data-deck-panel="editor">
+            <header class="editor-heading">
+                <h2 id="editor-title"></h2>
+                <span id="draft-state" role="status"></span>
+            </header>
+            <form id="server-form" autocomplete="off">
+                    <label><span data-i18n="type">Тип</span>
+                        <select name="type">
+                            <option value="ssh">SSH / Linux</option>
+                            <option value="local" data-i18n="panelHost">ПК панели</option>
+                        </select>
+                    </label>
+                <label><span data-i18n="name">Название</span><input name="name" required maxlength="100" data-i18n-placeholder="nodeNameExample"></label>
+                <input type="hidden" name="profile" value="generic">
+
+                <div id="connection-fields">
+                <div class="form-section-title" data-i18n="connection">Подключение</div>
+                <div class="form-row connection-address">
+                    <label><span data-i18n="serverAddress">IP или домен</span><input name="host" maxlength="253" placeholder="server.example.com" spellcheck="false" autocapitalize="none"></label>
+                    <label><span data-i18n="port">Порт</span><input name="port" type="number" value="22" min="1" max="65535"></label>
+                </div>
+                <label><span data-i18n="user">Пользователь</span><input name="username" maxlength="100" placeholder="operator" spellcheck="false" autocapitalize="none"></label>
+                <label><span data-i18n="keyPath">Путь к ключу</span><input name="key_path" data-i18n-placeholder="keyPreserved" spellcheck="false" autocapitalize="none"></label>
+                <label class="inline-check" id="clear-key-row" hidden><input name="clear_key" type="checkbox"><span data-i18n="clearKey">Убрать сохранённый ключ</span></label>
+                <div class="setup-actions">
+                    <button type="button" id="scan-host-key" data-i18n="scanHostKey">Ключ сервера</button>
+                    <button type="button" id="test-connection" data-i18n="testConnection">Проверить SSH</button>
+                </div>
+                <div id="host-key-review" hidden>
+                    <output id="host-key-fingerprint"></output>
+                    <label class="inline-check"><input type="checkbox" id="trust-host-key"><span data-i18n="trustHostKey">Отпечаток сверен, доверять этому ключу</span></label>
+                </div>
+                <div id="connection-feedback" role="status"></div>
+                </div>
+
+                <details class="server-options" id="services-options">
+                    <summary data-i18n="customServices">Наблюдаемые сервисы</summary>
+                    <div id="custom-services"></div>
+                    <button type="button" id="add-service-btn" data-i18n="addService">Добавить сервис</button>
+                </details>
+                <details class="server-options" id="template-options">
+                    <summary data-i18n="serverTemplate">Шаблон</summary>
+                    <label><span data-i18n="serverTemplate">Шаблон</span><select id="server-template"></select></label>
+                    <label><span data-i18n="templateName">Название шаблона</span><input id="template-name" maxlength="100"></label>
+                    <div class="setup-actions">
+                        <button type="button" id="apply-template" data-i18n="applyTemplate">Применить</button>
+                        <button type="button" id="save-template" data-i18n="saveTemplate">Новый шаблон</button>
+                        <button type="button" id="update-template" data-i18n="updateTemplate">Обновить шаблон</button>
+                        <button type="button" id="delete-template" class="danger" data-i18n="deleteTemplate">Удалить шаблон</button>
+                    </div>
+                    <div id="template-feedback" role="status"></div>
+                </details>
+                <details class="server-options" id="policy-options">
+                    <summary data-i18n="controlMode">Режим управления</summary>
+                    <div class="form-row two">
+                        <label><span data-i18n="environment">Среда</span><select name="environment">
+                            <option value="production" data-i18n="production">Рабочая</option>
+                            <option value="lab" data-i18n="lab">Стенд</option>
+                            <option value="personal" data-i18n="personal">Личная</option>
+                        </select></label>
+                        <label><span data-i18n="controlMode">Режим управления</span><select name="control_mode">
+                            <option value="observe" data-i18n="observe">Наблюдение</option>
+                            <option value="operate" data-i18n="operate">Разрешённые операции</option>
+                        </select></label>
+                    </div>
+                    <label><span data-i18n="upstream">Вышестоящий узел</span><select name="upstream_id"></select></label>
+                    <label class="inline-check"><input name="protected" type="checkbox"><span data-i18n="protectedNode">Запретить перезапуски на этом узле</span></label>
+                    <label><span data-i18n="protectedTargets">Защищённые службы и контейнеры</span><textarea name="protected_targets" rows="2"></textarea></label>
+                </details>
+                <details class="server-options">
+                    <summary data-i18n="advanced">Расширенно</summary>
+                    <label><span data-i18n="id">ID</span><input name="id" required maxlength="48" pattern="[a-zA-Z0-9_-]{2,48}"></label>
+                    <div class="form-row two">
+                        <label><span data-i18n="role">Роль</span><input name="role" value="node" maxlength="100"></label>
+                        <label><span data-i18n="tags">Теги</span><input name="tags" placeholder="vpn, prod"></label>
+                    </div>
+                    <label><span data-i18n="provider">Провайдер</span><input name="provider"></label>
+                    <label><span data-i18n="notes">Заметки</span><textarea name="notes" rows="3"></textarea></label>
+                    <div class="toggles">
+                        <label><input name="strict_host_key" type="checkbox" checked> <span data-i18n="strictHostKey">Проверять host key</span></label>
+                    </div>
+                </details>
+
+                <div class="form-section-title" data-i18n="geolocation">Геолокация</div>
+                <label class="geo-mode"><input name="auto_geo" type="checkbox" checked> <span data-i18n="geoAutoIp">Определять по IP сервера</span></label>
+                <div id="location-fields">
+                    <div class="form-row two">
+                        <label><span data-i18n="city">Город</span><input name="city"></label>
+                        <label><span data-i18n="country">Страна</span><input name="country"></label>
+                    </div>
+                    <div class="form-row two">
+                        <label><span data-i18n="latitude">Широта</span><input name="lat" type="number" step="any" min="-90" max="90"></label>
+                        <label><span data-i18n="longitude">Долгота</span><input name="lon" type="number" step="any" min="-180" max="180"></label>
+                    </div>
+                </div>
+                <button type="button" id="device-geo-btn" data-i18n="deviceGeo">Геопозиция этого устройства</button>
+                <button type="button" id="geo-node-btn" data-i18n="autoGeo">Авто-гео</button>
+            </form>
+            <footer class="editor-footer">
+                <div id="form-status" role="status"></div>
+                <div class="button-row editor-actions">
+                    <button type="submit" form="server-form" id="save-node-btn" class="primary" data-i18n="save">Сохранить</button>
+                    <button type="button" id="cancel-node-btn" data-i18n="cancel">Отмена</button>
+                    <button type="button" id="delete-node-btn" class="danger" data-i18n-title="removeNode" data-i18n-aria="removeNode"><span class="map-icon icon-close" aria-hidden="true"></span></button>
+                </div>
+            </footer>
+        </section>
+
+        <section class="deck-panel" data-deck-panel="settings">
+            <div class="settings-group">
+                <div class="form-section-title" data-i18n="appearance">Оформление</div>
+                <select id="theme-select" data-pref="uiTheme" data-i18n-aria="appearance" aria-label="Оформление">
+                    <option value="fallout" data-i18n="falloutTheme">Fallout / RobCo</option>
+                    <option value="operations" data-i18n="operationsTheme">Оперативная панель</option>
+                </select>
+            </div>
+            <div class="settings-group">
+                <div class="form-section-title" data-i18n="language">Язык</div>
+                <select id="language-select" data-pref="language">
+                    <option value="ru" data-i18n="russian">Русский</option>
+                    <option value="en" data-i18n="english">English</option>
+                </select>
+            </div>
+
+            <div class="settings-group">
+                <div class="form-section-title" data-i18n="display">Вид</div>
+                <div class="settings-grid">
+                    <label><input type="checkbox" data-pref="crt"> <span data-i18n="crtGlass">CRT-стекло</span></label>
+                    <label><input type="checkbox" data-pref="scanlines"> <span data-i18n="scanlines">Скан-линии</span></label>
+                    <label><input type="checkbox" data-pref="flicker"> <span data-i18n="flicker">Мерцание</span></label>
+                    <label><input type="checkbox" data-pref="audio"> <span data-i18n="audio">Звук</span></label>
+                    <label><input type="checkbox" data-pref="lowPower"> <span data-i18n="lowPower">Экономия</span></label>
+                    <label><input type="checkbox" data-pref="compactDeck"> <span data-i18n="compactUi">Компактно</span></label>
+                    <label><input type="checkbox" data-pref="amberMode"> <span data-i18n="amberMode">Янтарный</span></label>
+                    <label><input type="checkbox" data-pref="mapLabels"> <span data-i18n="mapLabels">Подписи карты</span></label>
+                    <label><input type="checkbox" data-pref="spaceBackground"> <span data-i18n="spaceBackground">Космос</span></label>
+                    <label><input type="checkbox" data-pref="advancedMode"> <span data-i18n="advancedMode">Расширенный режим</span></label>
+                </div>
+            </div>
+
+            <div class="settings-group geo-settings">
+                <div class="form-section-title" data-i18n="geolocation">Геолокация</div>
+                <button type="button" id="refresh-geo-btn" data-i18n="refreshGeo">Обновить геолокацию</button>
+                <div id="geo-feedback" role="status"></div>
+            </div>
+            <div class="settings-group">
+                <div class="form-section-title" data-i18n="access">Доступ</div>
+                <div class="access-box">
+                    <span data-i18n="localAccess">Ссылка входа</span>
+                    <input id="access-url" readonly>
+                    <button id="copy-access-btn" data-i18n="copy">Копировать</button>
+                </div>
+                <div class="access-box advanced-fields">
+                    <span data-i18n="controlToken">Ключ доступа</span>
+                    <input id="access-token" readonly>
+                    <button id="reveal-token-btn" data-i18n="reveal">Показать</button>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <div class="form-section-title" data-i18n="actions">Действия</div>
+                <div class="settings-actions">
+                    <button id="reload-config-btn" data-i18n="reloadConfig">Перечитать конфиг</button>
+                    <button id="export-config-btn" data-i18n="exportRegistry">Экспорт узлов</button>
+                    <button type="button" id="import-config-btn" data-i18n="importRegistry">Импорт реестра</button>
+                    <input type="file" id="import-config-file" accept=".json,application/json" hidden>
+                    <button id="lock-room-btn" class="danger" data-i18n="lockRoom">Закрыть панель</button>
+                </div>
+            </div>
+            <div id="settings-status"></div>
+        </section>
+    </aside>
+
+    <dialog id="setup-dialog" aria-labelledby="setup-confirm-title" aria-describedby="setup-confirm-message">
+        <h2 id="setup-confirm-title" data-i18n="confirmAction">Подтверждение</h2>
+        <p id="setup-confirm-message"></p>
+        <form method="dialog" class="setup-actions">
+            <button value="cancel" data-i18n="cancel">Отмена</button>
+            <button value="confirm" data-i18n="confirm">Подтвердить</button>
+        </form>
+    </dialog>
+
+    <dialog id="operation-dialog">
+        <h2 data-i18n="restartPlan">План перезапуска</h2>
+        <div id="operation-plan"></div>
+        <div class="service-toolbar">
+            <button id="cancel-operation" type="button" data-i18n="cancel">Отмена</button>
+            <button id="confirm-operation" type="button" class="danger" data-i18n="confirmRestart">Подтвердить перезапуск</button>
+        </div>
+    </dialog>
+
+    <div id="terminal-modal" class="hidden">
+        <div id="terminal-header">
+            <span>TERMINAL UPLINK /// <span id="server-name-label">UNKNOWN</span></span>
+            <div>
+                <button id="minimize-terminal-btn" title="Minimize">[-]</button>
+                <button id="close-terminal-btn" title="Terminate session">[X]</button>
+            </div>
+        </div>
+        <div id="terminal-container"></div>
+    </div>
+
+    <script>
+        window.OVERSEER_SERVERS = {{ servers | tojson }};
+        window.OVERSEER_ACCESS = {{ access | tojson }};
+    </script>
+    <script src="/static/js/preferences.js?v=15"></script>
+    <script src="/static/js/i18n.js?v=15"></script>
+    <script src="/static/js/fleet_i18n.js?v=13"></script>
+    <script src="/static/js/map_i18n.js?v=16"></script>
+    <script src="/static/js/setup_i18n.js?v=2"></script>
+    <script src="/static/js/map_geometry.js?v=14"></script>
+    <script src="/static/js/geolocation.js?v=16"></script>
+    <script src="/static/js/space.js?v=16"></script>
+    <script src="/static/js/scene.js?v=17"></script>
+    <script src="/static/js/terminal.js?v=17"></script>
+    <script src="/static/js/control_panel.js?v=18"></script>
+    <script src="/static/js/setup_panel.js?v=2"></script>
+    <script src="/static/js/fleet_panel.js?v=14"></script>
+</body>
+
+</html>

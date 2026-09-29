@@ -1,0 +1,257 @@
+/* Operations workspace. The login screen keeps its separate terminal styling. */
+.ops-dashboard {
+    --green: #afd28c;
+    --green-soft: #afd28c12;
+    --amber: #e9bc69;
+    --red: #ec7d79;
+    --ink: #101412;
+    --panel: #171c19;
+    --line: #384339;
+    --text: #d5ddd6;
+    --muted: #9aa89e;
+    --deck-width: 424px;
+    background: var(--ink);
+    color: var(--text);
+    height: 100dvh;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+    animation: none;
+    color-scheme: dark;
+}
+.theme-amber .ops-dashboard { --green: #e9bc69; --green-soft: #e9bc6912; --line: #4c4639; }
+.ops-dashboard *, .ops-dashboard *::before, .ops-dashboard *::after { letter-spacing: 0; }
+.ops-dashboard [hidden] { display: none !important; }
+.ops-dashboard button { touch-action: manipulation; }
+.ops-dashboard button, .ops-dashboard input, .ops-dashboard select, .ops-dashboard textarea { border-radius: 3px; }
+.ops-dashboard input[type='checkbox'] { accent-color: var(--green); width: 16px; height: 16px; }
+.ops-dashboard .map-tool:focus-visible, .ops-dashboard textarea:focus-visible { outline: 2px solid #8fcbd3; outline-offset: 3px; }
+.ops-dashboard button:disabled { cursor: not-allowed; }
+.ops-dashboard.crt::before { opacity: 0.1; z-index: 3; }
+.ops-dashboard .scanlines { opacity: 0.14; z-index: 3; }
+.ops-dashboard:not(.no-flicker):not(.low-power) .scanlines { animation: workspace-flicker 5s infinite; }
+@keyframes workspace-flicker { 0%, 96%, 100% { opacity: 0.14; } 98% { opacity: 0.22; } }
+.ops-dashboard #ui-header {
+    inset: 0 0 auto 0;
+    height: 86px;
+    max-width: none;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #171c19;
+    border-bottom: 1px solid var(--line);
+    text-shadow: none;
+}
+.brand-mark { width: 44px; height: 44px; border: 1px solid #6f8663; display: grid; place-items: center; color: var(--green); flex-shrink: 0; }
+.brand-mark .map-icon { width: 28px; height: 28px; }
+.brand-copy { min-width: 0; }
+.ops-dashboard #ui-header h1 { font-family: 'Ubuntu Mono', Consolas, monospace; font-size: 27px; font-weight: 700; line-height: 1.2; color: #e2e8da; }
+.ops-dashboard #ui-header p { font-size: 12px; color: var(--muted); margin: 4px 0 0; }
+.header-signature { margin-left: auto; font: 12px/1.5 'Ubuntu Mono', Consolas, monospace; color: var(--green); text-align: right; }
+.header-signature span { display: block; color: var(--muted); }
+
+.ops-dashboard #globe-container, .ops-dashboard #map-label-layer { inset: 149px var(--deck-width) 134px 0; }
+.ops-dashboard #globe-container { cursor: grab; }
+.ops-dashboard #globe-container:active { cursor: grabbing; }
+.ops-dashboard #globe-container canvas { display: block; outline-offset: -3px; }
+.ops-dashboard #map-label-layer { overflow: hidden; }
+#map-label-layer > canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#map-topbar { position: absolute; top: 106px; left: 28px; right: calc(var(--deck-width) + 28px); z-index: 10; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.map-heading { display: grid; gap: 2px; font: 11px/1.4 'Ubuntu Mono', Consolas, monospace; color: var(--muted); }
+.map-heading strong { font-weight: 400; font-size: 13px; color: var(--text); }
+.map-surfaces { display: flex; border: 1px solid var(--line); border-radius: 4px; padding: 3px; background: #141915; flex-shrink: 0; }
+.map-surfaces button { border: 0; color: var(--muted); background: transparent; padding: 6px 12px; font-size: 12px; min-height: 30px; cursor: pointer; }
+.map-surfaces button[aria-pressed='true'] { background: #afd28c; color: #162111; }
+.theme-amber .map-surfaces button[aria-pressed='true'] { background: #e9bc69; }
+.map-surfaces button:hover { color: #fff; background: #3c4938; }
+#map-tools { position: absolute; top: 175px; left: 26px; display: flex; flex-direction: column; gap: 5px; z-index: 12; }
+.map-tool { width: 38px; height: 38px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line); background: #171c19ed; color: #aebeb0; cursor: pointer; flex-shrink: 0; }
+.map-tool[aria-pressed='true'] { color: var(--green); border-color: #66785a; background: #243020; }
+.map-tool:hover { color: #fff; border-color: var(--green); }
+.map-icon { display: block; width: 18px; height: 18px; background-color: currentColor; mask: var(--icon) center / contain no-repeat; -webkit-mask: var(--icon) center / contain no-repeat; }
+.icon-zoom-in { --icon: url('/static/icons/zoom-in.svg'); }
+.icon-zoom-out { --icon: url('/static/icons/zoom-out.svg'); }
+.icon-focus { --icon: url('/static/icons/focus.svg'); }
+.icon-rotate { --icon: url('/static/icons/rotate-cw.svg'); }
+.icon-grid { --icon: url('/static/icons/grid-2x2.svg'); }
+.icon-pin { --icon: url('/static/icons/map-pin.svg'); }
+.icon-route { --icon: url('/static/icons/route.svg'); }
+.icon-expand { --icon: url('/static/icons/maximize.svg'); }
+.icon-close { --icon: url('/static/icons/x.svg'); }
+.icon-globe { --icon: url('/static/icons/globe.svg'); }
+.map-expanded .icon-expand { --icon: url('/static/icons/minimize.svg'); }
+.tool-separator { height: 6px; }
+.ops-dashboard .map-label { min-width: 142px; max-width: 215px; min-height: 50px; padding: 8px 11px; gap: 4px; background: #171c19ee; border: 1px solid #48544b; border-left: 3px solid currentColor; box-shadow: 0 4px 16px #0004; }
+.ops-dashboard .map-label::before { display: none; }
+.ops-dashboard .map-label strong { font-family: 'Segoe UI', sans-serif; font-size: 13px; font-weight: 600; line-height: 1.3; color: #e4eae4; }
+.ops-dashboard .map-label span { font-family: 'Ubuntu Mono', Consolas, monospace; font-size: 12px; line-height: 1.2; }
+.ops-dashboard .map-label.selected { border-top-color: var(--amber); border-right-color: var(--amber); border-bottom-color: var(--amber); box-shadow: 0 4px 20px #0004; }
+.ops-dashboard .map-label:hover { background: #27302a; }
+.ops-dashboard .healthy { color: #a2d492; }
+.ops-dashboard .degraded { color: #e9bc69; }
+.ops-dashboard .unknown { color: #90bac7; }
+.ops-dashboard .offline { color: #ec7d79; }
+#map-site-popover { position: absolute; top: 157px; left: 82px; width: 310px; max-width: calc(100vw - 102px); background: #1b211d; border: 1px solid #617259; border-radius: 5px; padding: 0 14px; z-index: 32; box-shadow: 0 10px 36px #0006; }
+#map-site-popover header { display: flex; align-items: center; justify-content: space-between; min-height: 52px; gap: 10px; border-bottom: 1px solid var(--line); }
+#map-site-popover header > strong { font-size: 16px; }
+#map-site-popover header .map-tool { width: 30px; height: 30px; border: 0; }
+#site-nodes button { display: grid; grid-template-columns: 8px minmax(0, 1fr); gap: 4px 9px; align-items: center; width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--line); color: var(--text); padding: 12px 4px; background: transparent; cursor: pointer; }
+#site-nodes button.selected { background: var(--green-soft); }
+#site-nodes button:hover { background: #ffffff0a; }
+#site-nodes strong, #site-nodes small { display: block; overflow-wrap: anywhere; }
+#site-nodes strong { font-size: 13px; font-weight: 600; }
+#site-nodes small { font: 12px/1.5 'Ubuntu Mono', monospace; color: var(--muted); }
+#site-nodes em { grid-column: 2; font-size: 11px; color: var(--muted); font-style: normal; }
+#site-coordinates { font: 11px/1.5 'Ubuntu Mono', monospace; padding: 10px 0; color: var(--muted); }
+#map-alert { position: absolute; z-index: 15; top: 155px; left: 85px; max-width: calc(100% - var(--deck-width) - 112px); color: var(--amber); font-size: 13px; background: #171c19; border: 1px solid var(--line); padding: 10px 14px; }
+.ops-dashboard #map-intel { left: 28px; bottom: 66px; width: auto; right: calc(var(--deck-width) + 28px); gap: 4px; border-left: 2px solid #a7bb8a; padding: 1px 0 1px 14px; background: none; text-shadow: none; }
+.ops-dashboard .intel-kicker { font: 11px/1.4 'Ubuntu Mono', monospace; color: var(--muted); }
+.ops-dashboard #map-intel strong { font-size: 19px; font-weight: 500; line-height: 1.3; overflow-wrap: anywhere; }
+.ops-dashboard #map-intel span { font: 12px/1.4 'Ubuntu Mono', monospace; color: var(--muted); overflow-wrap: anywhere; }
+#map-footer { position: absolute; bottom: 0; left: 0; right: var(--deck-width); min-height: 42px; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 28px; border-top: 1px solid #2e3830; color: var(--muted); font: 11px/1.4 'Ubuntu Mono', monospace; }
+.map-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.map-legend > span { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 6px; height: 6px; display: inline-block; border-radius: 50%; background: currentColor; }
+.legend-route { width: 16px; height: 0; border-top: 1px dashed #8fd5db; }
+#map-view-coordinates { white-space: nowrap; color: #b3c0b3; }
+
+.ops-dashboard #command-deck { top: 86px; right: 0; bottom: 0; width: var(--deck-width); max-height: none; border: 0; border-left: 1px solid var(--line); background: var(--panel); box-shadow: none; backdrop-filter: none; z-index: 20; }
+.ops-dashboard.compact-deck { --deck-width: 360px; }
+.ops-dashboard .deck-title { padding: 19px 20px; font-size: 11px; align-items: center; color: var(--muted); min-height: 58px; gap: 8px; }
+.ops-dashboard .deck-title strong { font: 12px/1.4 'Ubuntu Mono', monospace; color: var(--green); white-space: nowrap; }
+.ops-dashboard .deck-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 0 12px; gap: 0; flex-shrink: 0; }
+.ops-dashboard .deck-tab { color: #a7b2a9; font-size: 12px; padding: 12px 2px; border: 0; border-bottom: 2px solid transparent; background: transparent; text-shadow: none; border-radius: 0; min-height: 43px; }
+.ops-dashboard .deck-tab.active { color: #d7e5ce; border-bottom-color: var(--green); background: #ffffff05; }
+.ops-dashboard .deck-tab:hover { color: #fff; background: #ffffff08; }
+.ops-dashboard .deck-panel { padding: 20px; min-height: 0; scrollbar-width: thin; scrollbar-color: #53604f transparent; overscroll-behavior: contain; }
+.ops-dashboard .summary-grid { gap: 0; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--line); }
+.ops-dashboard .summary-grid div { border: 0; border-right: 1px solid var(--line); padding: 0 8px; background: none; gap: 7px; }
+.ops-dashboard .summary-grid div:first-child { padding-left: 0; }
+.ops-dashboard .summary-grid div:last-child { border-right: 0; }
+.ops-dashboard .summary-grid span { font-size: 11px; color: var(--muted); }
+.ops-dashboard .summary-grid strong { font: 26px/1 'Ubuntu Mono', monospace; color: #dde7d6; }
+.ops-dashboard #fleet-overview { margin: 0 0 22px; }
+.ops-dashboard .fleet-row { font: 13px/1.45 'Segoe UI', sans-serif; padding: 13px 0; gap: 8px; border-color: #313a32; }
+.ops-dashboard .fleet-row small { font-size: 11px; line-height: 1.5; }
+.ops-dashboard .fleet-row > span:last-of-type { font: 12px/1.4 'Ubuntu Mono', monospace; }
+.ops-dashboard .selected-node-panel { border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 16px 0; background: none; box-shadow: none; gap: 14px 8px; }
+.ops-dashboard .selected-node-panel > div:first-child { min-width: 0; }
+.ops-dashboard .selected-node-panel strong { font-size: 16px; font-weight: 600; line-height: 1.3; margin: 5px 0; overflow-wrap: anywhere; }
+.ops-dashboard .selected-node-panel span, .ops-dashboard .selected-node-panel small { font: 11px/1.5 'Ubuntu Mono', monospace; color: var(--muted); overflow-wrap: anywhere; }
+.ops-dashboard .node-card-status { padding: 3px 7px; min-width: 0; font: 11px/1.4 'Ubuntu Mono', monospace; border-color: #415238; border-radius: 3px; }
+.ops-dashboard .selected-actions { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.ops-dashboard .node-actions button, .ops-dashboard .selected-actions button, .ops-dashboard .panel-toolbar button, .ops-dashboard .button-row button, .ops-dashboard .access-box button, .ops-dashboard .settings-actions button { font-size: 12px; min-height: 36px; background: #ffffff04; color: #c5d5ba; text-shadow: none; border-color: #465140; }
+.ops-dashboard .node-actions button:hover, .ops-dashboard .selected-actions button:hover, .ops-dashboard .panel-toolbar button:hover, .ops-dashboard .button-row button:hover { background: #afd28c18; color: #fff; }
+.ops-dashboard .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); border: 0; gap: 0; padding-top: 0; font: 12px/1.5 'Ubuntu Mono', monospace; }
+.ops-dashboard .metrics-grid span, .ops-dashboard .metrics-grid strong { border: 0; border-bottom: 1px solid #313a32; padding: 8px 0; min-height: 32px; }
+.ops-dashboard .metrics-grid span { color: var(--muted); }
+.ops-dashboard .metrics-grid strong { text-align: right; color: #dbe5d4; }
+.ops-dashboard .node-card { border: 1px solid var(--line); border-radius: 4px; background: #ffffff02; padding: 12px; gap: 9px; }
+.ops-dashboard .node-card.selected { border-color: #778563; box-shadow: none; }
+.ops-dashboard .node-card strong { font-size: 14px; font-weight: 600; }
+.ops-dashboard .node-card span, .ops-dashboard .node-card-meta { font: 12px/1.5 'Ubuntu Mono', monospace; color: var(--muted); overflow-wrap: anywhere; }
+.ops-dashboard .node-card > div:first-child { min-width: 0; }
+.ops-dashboard .panel-toolbar { grid-template-columns: 1fr 1fr; margin-bottom: 14px; }
+.ops-dashboard .form-section-title { font-size: 12px; color: var(--green); border-bottom: 1px solid var(--line); padding: 8px 0; margin-bottom: 4px; }
+.ops-dashboard #server-form { gap: 12px; }
+.ops-dashboard #server-form label { font-size: 12px; gap: 5px; color: #b7c3b8; }
+.ops-dashboard #server-form input, .ops-dashboard #server-form select, .ops-dashboard #server-form textarea, .ops-dashboard .access-box input, .ops-dashboard .settings-group select, .ops-dashboard .service-toolbar select { background: #101612; border-color: #485246; padding: 9px 10px; font-size: 13px; line-height: 1.4; min-height: 38px; }
+.ops-dashboard .form-row.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ops-dashboard .settings-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 10px; }
+.ops-dashboard .settings-grid label { border: 0; border-bottom: 1px solid #303b31; padding: 10px 0; font-size: 12px; min-height: 42px; }
+.ops-dashboard .access-box { font-size: 12px; }
+.ops-dashboard .toggles label { border-color: var(--line); font-size: 12px; }
+.ops-dashboard .button-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ops-dashboard .service-toolbar { margin-top: 0; }
+.ops-dashboard .service-toolbar button, .ops-dashboard .service-row button { font-size: 12px; background: #273023; color: #d6e1cb; }
+.ops-dashboard #service-detail, .ops-dashboard #diagnostic-results, .ops-dashboard #operation-history, .ops-dashboard #service-feedback { font-size: 13px; }
+.ops-dashboard .policy-note { font-size: 12px; color: var(--muted); }
+.ops-dashboard .resource-strip { margin: 18px 0; }
+.ops-dashboard #terminal-modal { border: 1px solid #768c60; box-shadow: 0 12px 64px #0009; }
+.ops-dashboard #terminal-modal.hidden { visibility: hidden; }
+.ops-dashboard #terminal-header { font: 14px/1.5 'Ubuntu Mono', monospace; border-bottom: 1px solid var(--line); text-shadow: none; }
+.ops-dashboard #minimize-terminal-btn, .ops-dashboard #close-terminal-btn { text-shadow: none; font-size: 18px; }
+.ops-dashboard button.danger { color: var(--red); border-color: #ac645f; }
+.ops-dashboard #server-form input[type='checkbox'] { width: 16px; min-height: 16px; height: 16px; flex-shrink: 0; }
+.ops-dashboard.map-expanded { --deck-width: 0px; }
+.ops-dashboard.map-expanded #command-deck { display: none; }
+.ops-dashboard.map-expanded #map-site-popover { max-width: calc(100vw - 102px); }
+
+@media (max-width: 1100px) and (min-width: 901px) {
+    .ops-dashboard { --deck-width: 370px; }
+    .ops-dashboard .deck-panel { padding: 16px; }
+    #map-view-coordinates { display: none; }
+    #map-topbar { left: 22px; right: calc(var(--deck-width) + 22px); }
+    #map-tools { left: 16px; }
+    .ops-dashboard .map-label { min-width: 120px; max-width: 175px; }
+}
+@media (min-width: 901px) and (max-height: 650px) {
+    #map-tools { top: auto; bottom: 58px; left: calc((100% - var(--deck-width)) / 2); transform: translateX(-50%); flex-direction: row; }
+    .tool-separator { height: 38px; width: 4px; }
+    .ops-dashboard #map-intel { display: none; }
+    .ops-dashboard #globe-container, .ops-dashboard #map-label-layer { bottom: 110px; }
+}
+@media (max-width: 900px) {
+    .ops-dashboard { --deck-width: 0px; --deck-top: 54dvh; }
+    .ops-dashboard #ui-header { height: 68px; padding: 0 16px; gap: 10px; }
+    .brand-mark { width: 34px; height: 34px; }
+    .brand-mark .map-icon { width: 23px; height: 23px; }
+    .ops-dashboard #ui-header h1 { font-size: 22px; }
+    .ops-dashboard #ui-header p { font-size: 11px; }
+    .header-signature { font-size: 10px; }
+    #map-topbar { top: 81px; left: 16px; right: 16px; }
+    .ops-dashboard #globe-container, .ops-dashboard #map-label-layer { inset: 126px 0 calc(100dvh - var(--deck-top) + 55px) 0; }
+    #map-tools { flex-direction: row; left: 50%; transform: translateX(-50%); top: calc(var(--deck-top) - 47px); gap: 5px; }
+    .map-tool { width: 36px; height: 36px; }
+    .tool-separator { width: 4px; height: 36px; }
+    .ops-dashboard #command-deck, .ops-dashboard.compact-deck #command-deck { inset: var(--deck-top) 0 0; width: 100%; height: auto; max-height: none; border-left: 0; border-top: 1px solid #526046; }
+    .ops-dashboard .deck-title { min-height: 42px; padding: 12px 16px; }
+    .ops-dashboard .deck-panel { padding: 16px; }
+    .ops-dashboard #map-intel, #map-footer { display: none; }
+    .ops-dashboard .map-label { min-width: 120px; max-width: 175px; min-height: 44px; padding: 6px 9px; }
+    .ops-dashboard .map-label strong { font-size: 12px; }
+    .ops-dashboard .map-label span { font-size: 11px; }
+    #map-site-popover { top: 128px; left: 16px; max-width: calc(100vw - 32px); width: 300px; max-height: calc(100dvh - 145px); overflow: auto; }
+    #map-alert { top: 135px; left: 16px; max-width: calc(100vw - 32px); }
+    .ops-dashboard .summary-grid { margin-bottom: 10px; padding-bottom: 12px; }
+    .ops-dashboard .fleet-row { padding: 11px 0; }
+    .ops-dashboard .form-row.two, .ops-dashboard .settings-grid, .ops-dashboard .toggles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ops-dashboard.map-expanded #globe-container, .ops-dashboard.map-expanded #map-label-layer { bottom: 68px; }
+    .ops-dashboard.map-expanded #map-tools { top: auto; bottom: 16px; }
+    .ops-dashboard.map-expanded #map-site-popover { max-width: calc(100vw - 32px); }
+}
+@media (max-width: 520px) {
+    .header-signature { display: none; }
+    .ops-dashboard #ui-header p { max-width: 290px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .map-heading { font-size: 10px; }
+    .map-heading strong { font-size: 11px; }
+    .map-surfaces button { padding: 5px 9px; font-size: 11px; min-height: 28px; }
+    .ops-dashboard .deck-tabs { padding: 0 8px; }
+    .ops-dashboard .deck-tab { font-size: 11px; }
+    .ops-dashboard .summary-grid strong { font-size: 23px; }
+}
+@media (max-width: 360px) {
+    #map-tools { gap: 3px; }
+    .map-tool { width: 32px; height: 36px; }
+    .tool-separator { width: 0; }
+    .ops-dashboard #ui-header h1 { font-size: 20px; }
+    .ops-dashboard #ui-header p { font-size: 10px; }
+    .ops-dashboard .map-label { min-width: 100px; max-width: 145px; }
+}
+@media (max-width: 900px) and (max-height: 600px) {
+    .ops-dashboard { --deck-top: 55dvh; }
+    .ops-dashboard #globe-container, .ops-dashboard #map-label-layer { bottom: 55px; right: 42%; top: 126px; }
+    .ops-dashboard #command-deck, .ops-dashboard.compact-deck #command-deck { inset: 68px 0 0 58%; width: auto; border-left: 1px solid var(--line); }
+    #map-topbar { right: calc(42% + 16px); }
+    .map-heading { display: none; }
+    #map-tools { top: auto; bottom: 10px; left: 29%; gap: 2px; }
+    .map-tool { width: 30px; height: 32px; }
+    .ops-dashboard.map-expanded #globe-container, .ops-dashboard.map-expanded #map-label-layer { right: 0; }
+    .ops-dashboard.map-expanded #map-tools { left: 50%; }
+    .ops-dashboard.map-expanded #map-topbar { right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ops-dashboard .scanlines { animation: none !important; }
+    .ops-dashboard * { scroll-behavior: auto !important; }
+}

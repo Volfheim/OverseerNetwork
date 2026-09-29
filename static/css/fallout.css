@@ -1,0 +1,78 @@
+/* RobCo phosphor theme; layout is shared with Operations. */
+.ops-dashboard.theme-fallout {
+    --green: #68f25d;
+    --green-soft: #54ff3314;
+    --amber: #ffd06c;
+    --red: #ff8174;
+    --ink: #020603;
+    --panel: #061109f5;
+    --line: #3e7437;
+    --text: #c4f2ac;
+    --muted: #86b67f;
+    font-family: 'Ubuntu Mono', Consolas, monospace;
+}
+.theme-amber .ops-dashboard.theme-fallout { --green: #ffc957; --green-soft: #ffbf3e14; --line: #786130; --text: #ffe0a0; --muted: #bcb07d; }
+.theme-fallout #ui-header { background: #041006f0; border-bottom-color: #4e853f; box-shadow: 0 1px 12px #54ff3310; }
+.ops-dashboard.theme-fallout #ui-header h1 { color: var(--green); text-shadow: 0 0 9px #6dff4955; font-size: 29px; }
+.theme-fallout .brand-mark { color: var(--green); border: 2px solid var(--green); box-shadow: inset 0 0 12px #54ff3320; }
+.theme-fallout .header-signature { color: var(--green); }
+.ops-dashboard.theme-fallout #command-deck { border-left-color: #46783a; background: var(--panel); box-shadow: -3px 0 16px #53ff3310; }
+.ops-dashboard.theme-fallout .deck-title { color: var(--green); font-size: 13px; border-bottom-color: var(--line); }
+.ops-dashboard.theme-fallout .deck-title strong { color: var(--amber); font-size: 14px; }
+.ops-dashboard.theme-fallout .deck-tab { font-size: 14px; color: #9fd293; }
+.ops-dashboard.theme-fallout .deck-tab.active { color: var(--green); border-color: var(--green); background: #4fff3110; text-shadow: 0 0 7px #4fff3130; }
+.ops-dashboard.theme-fallout .summary-grid strong { color: var(--green); text-shadow: 0 0 10px #5dff4428; }
+.ops-dashboard.theme-fallout .summary-grid span { font-size: 13px; }
+.ops-dashboard.theme-fallout .fleet-row { font-family: 'Ubuntu Mono', Consolas, monospace; font-size: 15px; color: var(--text); border-color: #2c492d; }
+.ops-dashboard.theme-fallout .fleet-row small { font-size: 13px; color: var(--amber); }
+.ops-dashboard.theme-fallout .selected-node-panel strong { color: #ddffce; font: 20px/1.2 'Ubuntu Mono', monospace; }
+.ops-dashboard.theme-fallout .selected-node-panel span, .ops-dashboard.theme-fallout .selected-node-panel small { color: var(--muted); font-size: 12px; }
+.ops-dashboard.theme-fallout .node-card { background: #021006; border-color: #3d6638; }
+.ops-dashboard.theme-fallout .node-card.selected { border-color: var(--amber); }
+.ops-dashboard.theme-fallout .node-card strong { color: #d6ffc9; font-size: 17px; }
+.ops-dashboard.theme-fallout .node-actions button, .ops-dashboard.theme-fallout .selected-actions button,
+.ops-dashboard.theme-fallout .panel-toolbar button, .ops-dashboard.theme-fallout .button-row button { color: var(--green); border-color: #4f783e; font-size: 14px; background: #031004; }
+.ops-dashboard.theme-fallout .metrics-grid { font-size: 14px; }
+.ops-dashboard.theme-fallout .metrics-grid strong { color: #cdfabe; }
+.theme-fallout .map-heading { color: #81aa75; font-size: 12px; }
+.theme-fallout .map-heading strong { color: var(--green); font-size: 14px; }
+.theme-fallout .map-surfaces { border-color: #507d3d; background: #031105; }
+.theme-fallout .map-surfaces button { font-size: 14px; color: #a1d991; }
+.theme-fallout .map-surfaces button[aria-pressed='true'] { background: var(--green); color: #021400; }
+.theme-fallout .map-tool { color: #93c982; border-color: #416c36; background: #031004ea; }
+.theme-fallout .map-tool[aria-pressed='true'] { color: var(--green); border-color: #73ba51; background: #15350cdc; box-shadow: inset 0 0 9px #55ff3320; }
+.ops-dashboard.theme-fallout .map-label { background: #011103eb; border-color: #48733d; border-left-color: currentColor; box-shadow: 0 0 12px #4fff3114; }
+.ops-dashboard.theme-fallout .map-label strong { color: #d3ffc3; font: 16px/1.15 'Ubuntu Mono', Consolas, monospace; }
+.ops-dashboard.theme-fallout .map-label.selected { border-color: var(--amber); }
+.theme-fallout #map-site-popover { background: #041207f7; border-color: #73a44e; box-shadow: 0 0 22px #6aff281f; }
+.theme-fallout #map-site-popover header > strong { color: var(--green); font: 22px/1.3 'Ubuntu Mono', monospace; }
+.theme-fallout #site-nodes strong { font: 16px/1.3 'Ubuntu Mono', monospace; }
+.ops-dashboard.theme-fallout #map-intel { border-left-color: var(--green); }
+.ops-dashboard.theme-fallout #map-intel strong { color: #d4ffc1; font: 23px/1.2 'Ubuntu Mono', monospace; }
+.theme-fallout #map-footer { color: #92bd83; border-top-color: #36562d; }
+.theme-fallout .form-section-title { color: var(--amber); }
+.ops-dashboard.theme-fallout #server-form label { color: #b8e6a5; font-size: 14px; }
+.ops-dashboard.theme-fallout #server-form input, .ops-dashboard.theme-fallout #server-form select,
+.ops-dashboard.theme-fallout #server-form textarea, .ops-dashboard.theme-fallout .settings-group select { background: #020b04; border-color: #527343; color: #d6ffc8; font-size: 15px; }
+.ops-dashboard.theme-fallout .settings-grid label { font-size: 14px; }
+.ops-dashboard.theme-fallout .service-toolbar button, .ops-dashboard.theme-fallout .service-row button { background: #15300e; color: var(--green); }
+.ops-dashboard.theme-fallout .service-row, .ops-dashboard.theme-fallout .diagnostic-row { border-color: #325331; }
+.ops-dashboard.theme-fallout button.danger { color: var(--red); border-color: #ac645f; }
+.ops-dashboard #server-form .geo-mode { display: flex; align-items: center; gap: 9px; padding: 7px 0; }
+.geo-context { margin-top: 6px; }
+.geo-settings button { background: #17301b; color: var(--green); border: 1px solid var(--line); padding: 9px; cursor: pointer; }
+#geo-feedback { font: 12px/1.4 'Ubuntu Mono', monospace; color: var(--muted); }
+@media (max-width: 900px) {
+    .ops-dashboard.theme-fallout #ui-header h1 { font-size: 24px; }
+    .ops-dashboard.theme-fallout .deck-title { font-size: 12px; }
+    .ops-dashboard.theme-fallout .deck-tab { font-size: 13px; }
+    .ops-dashboard.theme-fallout .map-label strong { font-size: 15px; }
+    .theme-fallout .map-heading { font-size: 11px; }
+    .theme-fallout .map-heading strong { font-size: 12px; }
+    .theme-fallout .map-surfaces button { font-size: 13px; }
+}
+.ops-dashboard #server-form [hidden] { display: none; }
+#location-fields, #connection-fields { display: grid; gap: 12px; }
+.ops-dashboard .button-row:has(#geo-node-btn[hidden]) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#device-geo-btn { color: var(--green); background: var(--green-soft); border: 1px solid var(--line); padding: 10px; cursor: pointer; min-height: 40px; font: inherit; }
+.ops-dashboard .summary-grid span { white-space: normal; overflow: visible; text-overflow: clip; min-height: 30px; line-height: 1.35; }

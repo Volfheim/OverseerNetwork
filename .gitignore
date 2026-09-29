@@ -1,0 +1,28 @@
+# Local environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+node_modules/
+
+# Runtime state and private inventory
+servers.yaml
+servers.yaml.tmp
+overseer.secrets.json
+data/
+*.log
+*.sqlite3*
+*.pem
+*.key
+.env
+.env.*
+!.env.example
+
+# Build and generated artifacts
+dist/
+artifacts/
+*.zip
+*.exe
+!examples/demo/servers.yaml

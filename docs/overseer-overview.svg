@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Overseer Network operations room</title>
+  <desc id="desc">A stylized green tactical globe connected to two synthetic demo nodes and an observation panel.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#06110a"/><stop offset="1" stop-color="#101a13"/></linearGradient>
+    <radialGradient id="glow"><stop offset="0" stop-color="#79ff70" stop-opacity=".95"/><stop offset=".7" stop-color="#36c94f" stop-opacity=".45"/><stop offset="1" stop-color="#0c2013" stop-opacity=".1"/></radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="7"/></filter>
+    <style>
+      .mono{font:600 16px 'Cascadia Mono','Consolas',monospace;letter-spacing:.5px}
+      .small{font:13px 'Cascadia Mono','Consolas',monospace}
+      .line{stroke:#58e36a;stroke-opacity:.36;fill:none}
+      .panel{fill:#0b1610;stroke:#58e36a;stroke-opacity:.55}
+    </style>
+  </defs>
+  <rect width="1200" height="520" rx="18" fill="url(#bg)"/>
+  <path d="M30 66H1170M30 454H1170" stroke="#58e36a" stroke-opacity=".16"/>
+  <text x="44" y="45" class="mono" fill="#b9ffae">OVERSEER NETWORK // LOCAL OPERATIONS ROOM</text>
+  <text x="935" y="45" class="small" fill="#7fbf82">SAFE DEMO PROFILE</text>
+  <circle cx="430" cy="270" r="190" fill="#42d95a" opacity=".12" filter="url(#soft)"/>
+  <circle cx="430" cy="270" r="150" fill="url(#glow)" stroke="#6fff72" stroke-width="2"/>
+  <ellipse cx="430" cy="270" rx="150" ry="55" class="line"/><ellipse cx="430" cy="270" rx="73" ry="150" class="line"/>
+  <ellipse cx="430" cy="270" rx="125" ry="150" class="line" opacity=".5"/>
+  <path d="M280 270H580M305 205H555M305 335H555" class="line"/>
+  <path d="M550 185C665 143 690 143 780 167M550 350C655 380 685 387 780 362" stroke="#b0ff87" stroke-width="2" stroke-dasharray="7 8" fill="none"/>
+  <circle cx="550" cy="185" r="6" fill="#b0ff87"/><circle cx="550" cy="350" r="6" fill="#b0ff87"/>
+  <g class="panel"><rect x="690" y="112" width="270" height="110" rx="8"/><rect x="690" y="290" width="270" height="110" rx="8"/></g>
+  <g class="mono">
+    <text x="714" y="145" fill="#b9ffae">DEMO-EDGE</text><text x="714" y="171" class="small" fill="#8fe596">SSH / OBSERVE ONLY</text><text x="714" y="197" class="small" fill="#77d77e">● topology parent</text>
+    <text x="714" y="323" fill="#b9ffae">DEMO-CORE</text><text x="714" y="349" class="small" fill="#8fe596">SERVICE HEALTH</text><text x="714" y="375" class="small" fill="#77d77e">● plan before action</text>
+  </g>
+  <g class="panel"><rect x="70" y="118" width="220" height="304" rx="8"/></g>
+  <text x="96" y="155" class="mono" fill="#b9ffae">WATCHER PANEL</text>
+  <text x="96" y="191" class="small" fill="#77d77e">NODES</text><text x="245" y="191" class="mono" fill="#b9ffae">02</text>
+  <text x="96" y="224" class="small" fill="#77d77e">MODE</text><text x="188" y="224" class="small" fill="#b9ffae">TACTICAL</text>
+  <text x="96" y="257" class="small" fill="#77d77e">AUTH</text><text x="188" y="257" class="small" fill="#b9ffae">LOOPBACK</text>
+  <path d="M96 282H264" stroke="#58e36a" stroke-opacity=".35"/>
+  <text x="96" y="318" class="small" fill="#77d77e">OBSERVATIONS</text><text x="96" y="351" class="small" fill="#b9ffae">CPU / RAM / DISK</text>
+  <text x="96" y="381" class="small" fill="#b9ffae">SSH / TCP / SYSTEMD</text><text x="96" y="411" class="small" fill="#b9ffae">RECEIPTS / AUDIT</text>
+  <text x="46" y="488" class="small" fill="#6ba96f">Synthetic labels only · no production inventory</text>
+</svg>

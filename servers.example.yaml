@@ -1,0 +1,15 @@
+# Optional reference only. A fresh installation starts with an empty registry.
+schema_version: 2
+templates:
+  example-web:
+    name: Web server
+    environment: production
+    protected: true
+    services:
+      - id: web
+        label: Nginx
+        kind: systemd
+        target: nginx.service
+        required: true
+        allow_restart: false
+servers: {}

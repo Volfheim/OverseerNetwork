@@ -1,0 +1,45 @@
+# Synthetic demo profile. No credentials or real infrastructure addresses.
+schema_version: 2
+templates:
+  demo-web:
+    name: Demo web service
+    role: web
+    tags: [demo, public-example]
+    environment: lab
+    control_mode: observe
+    protected: true
+    services:
+      - id: web
+        label: Demo web
+        kind: systemd
+        target: demo-web.service
+        required: true
+        allow_restart: false
+servers:
+  demo-edge:
+    type: ssh
+    host: edge.demo.invalid
+    port: 22
+    username: observer
+    coordinates: [51.5, -0.1]
+    city: Demo City
+    country: Exampleland
+    provider: Example Cloud
+    auto_geo: false
+    strict_host_key: true
+    notes: Synthetic node for screenshots and schema examples.
+    profile: demo-web
+  demo-core:
+    type: ssh
+    host: core.demo.invalid
+    port: 22
+    username: observer
+    coordinates: [35.7, 139.7]
+    city: Demo City
+    country: Exampleland
+    provider: Example Cloud
+    auto_geo: false
+    strict_host_key: true
+    notes: Synthetic node for screenshots and schema examples.
+    profile: demo-web
+    upstream_id: demo-edge
