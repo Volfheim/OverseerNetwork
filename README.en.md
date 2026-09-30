@@ -23,6 +23,12 @@ Overseer Network is a single-user control plane for observing personal infrastru
 
 This repository contains source code, documentation, tests and a redacted synthetic example only. Server inventories, keys, tokens, logs, databases and exports are deliberately excluded from the public copy.
 
+<p align="center">
+  <img src="docs/screenshots/real-ui-synthetic.png" width="100%" alt="Real Overseer Network interface with anonymized nodes">
+</p>
+
+<p align="center"><sub>Real web interface with a synthetic demo profile: 18 nodes, the actual 3D globe and a responsive panel.</sub></p>
+
 ## What it provides
 
 | Area | Included |
@@ -77,13 +83,11 @@ $env:OVERSEER_HOME = (Resolve-Path .\examples\demo-many).Path
 The following frames come from the real Overseer Network web interface running with a safe demo profile: the textured 3D globe, relief shading, coordinate grid, links, rotation controls and responsive mobile layout. All names, states and physical pins in these frames are synthetic; no working inventory, IP addresses, keys or credentials are used. The matching 18-node configuration is [examples/demo-many/servers.yaml](examples/demo-many/servers.yaml); records use local mode and their coordinates are display-only for the map.
 
 <p align="center">
-  <img src="docs/screenshots/real-globe-rotation.gif" width="46%" alt="Real 3D globe animation with synthetic nodes">
-  <img src="docs/screenshots/real-ui-synthetic.png" width="46%" alt="Real interface with anonymized nodes">
+  <img src="docs/screenshots/real-globe-rotation.gif" width="72%" alt="Real 3D globe animation with synthetic nodes">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/real-ui-synthetic-alt.png" width="46%" alt="Rotated real globe with synthetic nodes">
-  <img src="docs/screenshots/real-ui-mobile.png" width="46%" alt="Responsive mobile globe interface">
+  <img src="docs/screenshots/real-ui-mobile.png" width="42%" alt="Responsive mobile globe interface">
 </p>
 
 ## Architecture

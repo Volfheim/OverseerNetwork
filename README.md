@@ -23,6 +23,12 @@ Overseer Network — это single-user control plane для наблюдени�
 
 Репозиторий содержит только код, документацию, тесты и обезличенный пример. Реестр серверов, ключи, токены, логи, базы данных и экспорты намеренно не входят в публичную копию.
 
+<p align="center">
+  <img src="docs/screenshots/real-ui-synthetic.png" width="100%" alt="Настоящий интерфейс Overseer Network с обезличенными узлами">
+</p>
+
+<p align="center"><sub>Настоящий web-интерфейс с синтетическим demo-профилем: 18 узлов, реальный 3D-глобус и responsive-панель.</sub></p>
+
 ## Возможности
 
 | Область | Что есть |
@@ -77,13 +83,11 @@ $env:OVERSEER_HOME = (Resolve-Path .\examples\demo-many).Path
 Ниже — кадры настоящего web-интерфейса Overseer Network, запущенного с безопасным demo-профилем: текстурный 3D-глобус, рельеф, координатная сетка, связи, поворот карты и responsive-мобильный layout. Все названия, состояния и физические точки в этих кадрах синтетические; рабочий реестр, IP-адреса, ключи и credentials не используются. Исходная 18-узловая конфигурация находится в [examples/demo-many/servers.yaml](examples/demo-many/servers.yaml); записи работают в локальном режиме, а координаты нужны только для демонстрации карты.
 
 <p align="center">
-  <img src="docs/screenshots/real-globe-rotation.gif" width="46%" alt="Анимация настоящего 3D-глобуса с синтетическими узлами">
-  <img src="docs/screenshots/real-ui-synthetic.png" width="46%" alt="Настоящий интерфейс с обезличенными узлами">
+  <img src="docs/screenshots/real-globe-rotation.gif" width="72%" alt="Анимация настоящего 3D-глобуса с синтетическими узлами">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/real-ui-synthetic-alt.png" width="46%" alt="Повернутый настоящий глобус с синтетическими узлами">
-  <img src="docs/screenshots/real-ui-mobile.png" width="46%" alt="Responsive-мобильный интерфейс глобуса">
+  <img src="docs/screenshots/real-ui-mobile.png" width="42%" alt="Responsive-мобильный интерфейс глобуса">
 </p>
 
 ## Архитектура
