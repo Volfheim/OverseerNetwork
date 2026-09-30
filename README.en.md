@@ -65,6 +65,27 @@ $env:OVERSEER_HOME = (Resolve-Path .\examples\demo).Path
 
 The demo file documents the schema. It does not promise reachable nodes and contains no credentials.
 
+To run the anonymized global showcase, point the panel at the demo profile before starting it:
+
+~~~powershell
+$env:OVERSEER_HOME = (Resolve-Path .\examples\demo-many).Path
+.\venv\Scripts\python.exe -m app --open --port 2078
+~~~
+
+## Anonymized interface showcase
+
+The following frames come from the real Overseer Network web interface running with a safe demo profile: the textured 3D globe, relief shading, coordinate grid, links, rotation controls and responsive mobile layout. All names, states and physical pins in these frames are synthetic; no working inventory, IP addresses, keys or credentials are used. The matching 18-node configuration is [examples/demo-many/servers.yaml](examples/demo-many/servers.yaml); records use local mode and their coordinates are display-only for the map.
+
+<p align="center">
+  <img src="docs/screenshots/real-globe-rotation.gif" width="46%" alt="Real 3D globe animation with synthetic nodes">
+  <img src="docs/screenshots/real-ui-synthetic.png" width="46%" alt="Real interface with anonymized nodes">
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/real-ui-synthetic-alt.png" width="46%" alt="Rotated real globe with synthetic nodes">
+  <img src="docs/screenshots/real-ui-mobile.png" width="46%" alt="Responsive mobile globe interface">
+</p>
+
 ## Architecture
 
 ~~~mermaid

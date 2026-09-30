@@ -26,3 +26,4 @@ artifacts/
 *.zip
 *.exe
 !examples/demo/servers.yaml
+!examples/demo-many/servers.yaml

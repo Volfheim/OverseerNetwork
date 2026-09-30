@@ -65,6 +65,27 @@ $env:OVERSEER_HOME = (Resolve-Path .\examples\demo).Path
 
 Demo-файл предназначен для знакомства со схемой данных; он не обещает доступность узлов и не содержит credentials.
 
+Для запуска именно обезличенной глобальной витрины укажите demo-профиль до старта панели:
+
+~~~powershell
+$env:OVERSEER_HOME = (Resolve-Path .\examples\demo-many).Path
+.\venv\Scripts\python.exe -m app --open --port 2078
+~~~
+
+## Обезличенная демонстрация интерфейса
+
+Ниже — кадры настоящего web-интерфейса Overseer Network, запущенного с безопасным demo-профилем: текстурный 3D-глобус, рельеф, координатная сетка, связи, поворот карты и responsive-мобильный layout. Все названия, состояния и физические точки в этих кадрах синтетические; рабочий реестр, IP-адреса, ключи и credentials не используются. Исходная 18-узловая конфигурация находится в [examples/demo-many/servers.yaml](examples/demo-many/servers.yaml); записи работают в локальном режиме, а координаты нужны только для демонстрации карты.
+
+<p align="center">
+  <img src="docs/screenshots/real-globe-rotation.gif" width="46%" alt="Анимация настоящего 3D-глобуса с синтетическими узлами">
+  <img src="docs/screenshots/real-ui-synthetic.png" width="46%" alt="Настоящий интерфейс с обезличенными узлами">
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/real-ui-synthetic-alt.png" width="46%" alt="Повернутый настоящий глобус с синтетическими узлами">
+  <img src="docs/screenshots/real-ui-mobile.png" width="46%" alt="Responsive-мобильный интерфейс глобуса">
+</p>
+
 ## Архитектура
 
 ~~~mermaid
